@@ -10,7 +10,7 @@ class Tool
      * @param array $condition 查询条件[一维数组]
      * 查询二维数组中指定的 键值对
      */
-    function fnArrayFilter($socure, array $condition) {
+    public static function fnArrayFilter($socure, array $condition) {
         return array_filter($socure, function ($value) use($condition) {
             $re = true;
             foreach ($condition as $k => $v) {
@@ -31,7 +31,7 @@ class Tool
      * @return array
      * 一维数组转树形结构
      */
-    public function arrayToTree(array $array = [], $id_name = 'id', $parent_id_name = 'parent_id', $children_name = 'children')
+    public static function arrayToTree(array $array = [], $id_name = 'id', $parent_id_name = 'parent_id', $children_name = 'children')
     {
         $items = [];
         foreach ($array as $value) {
@@ -51,7 +51,7 @@ class Tool
     }
 
     // 自定义日志 -- 仅支持laravel框架
-    public function loggerCustom_laravel($controller_name, $function_name, $message, $context = [], $echo_only = false) {
+    public static function loggerCustom_laravel($controller_name, $function_name, $message, $context = [], $echo_only = false) {
         $message = $controller_name . '::' . $function_name . '() ' . $message . " => ";
         if (!is_array($context)) {
             $context = [$context];
