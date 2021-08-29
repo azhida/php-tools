@@ -5,6 +5,25 @@ namespace Azhida\Tools;
 class Tool
 {
     /**
+     * @return array
+     * @param $socure array 原数据[二维数组]
+     * @param array $condition 查询条件[一维数组]
+     * 查询二维数组中指定的 键值对
+     */
+    function fnArrayFilter($socure, array $condition) {
+        return array_filter($socure, function ($value) use($condition) {
+            $re = true;
+            foreach ($condition as $k => $v) {
+                if (!isset($value[$k]) || $value[$k] != $v) {
+                    $re = false;
+                    break;
+                }
+            }
+            return $re;
+        });
+    }
+
+    /**
      * @param array $array
      * @param string $id_name
      * @param string $parent_id_name
