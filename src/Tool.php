@@ -36,6 +36,7 @@ class Tool
         $items = [];
         foreach ($array as $value) {
             if (!isset($value[$id_name]) || !isset($value[$parent_id_name])) return [];
+            if (!isset($value[$children_name])) $value[$children_name] = [];
             $items[$value[$id_name]] = $value;
         }
 
