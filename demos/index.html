@@ -3,8 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        #main{
+            max-width: 500px;
+            min-height: 500px;
+            background-color: gainsboro;
+            margin: auto;
+        }
+
+        li{
+           padding: 10px 0;
+            border: 0 solid red;
+        }
+        span{
+            border: 1px solid red;
+            padding: 10px;
+            cursor: pointer;
+            display: inline-block;
+        }
+        p{
+            color: red;
+            display: inline-block;
+        }
+    </style>
 </head>
 <body>
+
+<div id="main">
+    <ul>
+        <li><span onclick="fnGetBinaryTrees(this)">fnGetBinaryTrees</span><p></p></li>
+    </ul>
+</div>
 
 </body>
 
@@ -14,12 +43,13 @@
         fnGetBinaryTrees();
     });
 
-    function fnGetBinaryTrees() {
+    function fnGetBinaryTrees(obj) {
         $.ajax({
             url: './binaryTree.php',
             type: 'get',
             success: function (res) {
-                console.log(res);
+                console.log(res.msg);
+                $(obj).siblings ('p').text(' res.msg: ' + res.msg);
             }
         })
     }

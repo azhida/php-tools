@@ -1,5 +1,5 @@
 <?php
-
+header('Content-Type:application/json; charset=utf-8');
 require '../vendor/autoload.php';
 
 function fnGetBinaryTrees()
@@ -14,7 +14,7 @@ function fnGetBinaryTrees()
 
     $nodes = $binaryTree::$nodes;
 //    $nodes = \Azhida\Tools\Tool::arrayToTree($nodes);
-    return $nodes;
+    return res_success_msg('', $nodes);
 }
 
 $res = fnGetBinaryTrees();
