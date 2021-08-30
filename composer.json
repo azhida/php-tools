@@ -22,6 +22,7 @@
         }
     },
     "require": {
-        "monolog/monolog": "^2.3"
+        "monolog/monolog": "^2.3",
+        "rodenastyle/stream-parser": "^1.4"
     }
 }

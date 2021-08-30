@@ -31,6 +31,22 @@ class BinaryTree
         'show_info', // 展示信息【自定义】
     ];
 
+    // 横向添加子节点 -- 填满指定ID的指定层数
+    public static function addNodes_x($id, $depth = 10)
+    {
+
+    }
+
+    // 纵向添加子节点 -- 填满指定ID的指定边
+    public static function addNodes_y($id, $leg, $depth = 1, $start_time = '')
+    {
+        if (!$start_time) $start_time = time();
+
+
+
+
+    }
+
     // 添加第一个节点
     public static function addNode_first($leg_of_parent = 'L', $show_info = [])
     {
