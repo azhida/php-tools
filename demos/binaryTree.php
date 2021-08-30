@@ -1,10 +1,11 @@
 <?php
 
-require '../src/BinaryTree.php';
-require '../src/Tool.php';
+require '../vendor/autoload.php';
 
 function fnGetBinaryTrees()
 {
+    logger_custom(__CLASS__, __FUNCTION__, 121);
+
     $binaryTree = new \Azhida\Tools\BinaryTree();
     $parent = $binaryTree::addNode_first('L');
     for ($i = 0; $i < 100; $i++) {
