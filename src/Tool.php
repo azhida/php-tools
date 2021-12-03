@@ -2,8 +2,68 @@
 
 namespace Azhida\Tools;
 
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
+
 class Tool
 {
+    public static function resSuccessMsg($msg = '', $data = [], $meta = [])
+    {
+        $msg = $msg ? $msg : 'Operation success!';
+        return ['code' => '0', 'msg' => $msg, 'data' => $data, 'meta' => $meta];
+    }
+
+    public static function resFailMsg($msg = '', $data = [], $meta = [], $code = '1') {
+        $msg = $msg ? $msg : 'Operation failure!';
+        return ['code' => $code, 'msg' => $msg, 'data' => $data, 'meta' => $meta];
+    }
+
+    public static function sha512($data, $rawOutput = false){
+        if(!is_scalar($data)){
+            return false;
+        }
+        $data = (string)$data;
+        $rawOutput = !!$rawOutput;
+        return hash('sha512', $data, $rawOutput);
+    }
+
+    // 生成签名
+    public static function makeSign($secret, $data) {
+        // 对数组的值按key排序
+        ksort($data);
+        // 生成url的形式
+        $params = http_build_query($data);
+        // 生成sign
+        // $secret是通过key在api的数据库中查询得到
+        return md5($params . $secret);
+    }
+
+    // 验证签名
+    function verifySign($secret, $data, $check_timestamp = true) {
+        // 验证参数中是否有签名
+        if (!isset($data['sign']) || !$data['sign']) {
+            return res_fail_msg('Invalid signature.'); // 签名无效
+        }
+
+        if ($check_timestamp) {
+            if (!isset($data['timestamp']) || !$data['timestamp']) {
+                return res_fail_msg('Parameters error!'); // 参数错误
+            }
+            // 验证请求， 5分钟失效
+            if (time() - $data['timestamp'] > 300) {
+                return res_fail_msg('Signature failure!'); // 签名失效
+            }
+        }
+
+        $sign = $data['sign'];
+        unset($data['sign']);
+        if ($sign == make_sign($secret, $data)) {
+            return res_success_msg('Ok'); // 验证通过
+        } else {
+            return res_fail_msg('Signature error!'); // 签名错误
+        }
+    }
+
     /**
      * @return array
      * @param $socure array 原数据[二维数组]
@@ -51,14 +111,4 @@ class Tool
         return  $tree ;
     }
 
-    // 自定义日志 -- 仅支持laravel框架
-    public static function loggerCustom_laravel($controller_name, $function_name, $message, $context = [], $echo_only = false) {
-        $message = $controller_name . '::' . $function_name . '() ' . $message . " => ";
-        if (!is_array($context)) {
-            $context = [$context];
-        }
-        if ($echo_only) return $message . json_encode($context, JSON_UNESCAPED_UNICODE) . "\n";
-        $message .= "\n";
-        logger($message, $context); // 该方法为 laravel框架内方法，仅支持laravel框架调内调用
-    }
 }
