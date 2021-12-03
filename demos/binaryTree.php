@@ -4,8 +4,6 @@ require '../vendor/autoload.php';
 
 function fnGetBinaryTrees()
 {
-    logger_custom(__CLASS__, __FUNCTION__, 121);
-
     $binaryTree = new \Azhida\Tools\BinaryTree();
     $parent = $binaryTree::addNode_first('L');
     for ($i = 0; $i < 100; $i++) {
@@ -14,7 +12,7 @@ function fnGetBinaryTrees()
 
     $nodes = $binaryTree::$nodes;
 //    $nodes = \Azhida\Tools\Tool::arrayToTree($nodes);
-    return res_success_msg('', $nodes);
+    return \Azhida\Tools\Tool::resSuccessMsg('', $nodes);
 }
 
 $res = fnGetBinaryTrees();

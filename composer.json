@@ -5,10 +5,7 @@
     "autoload": {
         "psr-4": {
             "Azhida\\Tools\\": "src"
-        },
-        "files": [
-            "src/helpers.php"
-        ]
+        }
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",

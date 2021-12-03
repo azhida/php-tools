@@ -42,25 +42,25 @@ class Tool
     function verifySign($secret, $data, $check_timestamp = true) {
         // 验证参数中是否有签名
         if (!isset($data['sign']) || !$data['sign']) {
-            return res_fail_msg('Invalid signature.'); // 签名无效
+            return self::resFailMsg('Invalid signature.'); // 签名无效
         }
 
         if ($check_timestamp) {
             if (!isset($data['timestamp']) || !$data['timestamp']) {
-                return res_fail_msg('Parameters error!'); // 参数错误
+                return self::resFailMsg('Parameters error!'); // 参数错误
             }
             // 验证请求， 5分钟失效
             if (time() - $data['timestamp'] > 300) {
-                return res_fail_msg('Signature failure!'); // 签名失效
+                return self::resFailMsg('Signature failure!'); // 签名失效
             }
         }
 
         $sign = $data['sign'];
         unset($data['sign']);
-        if ($sign == make_sign($secret, $data)) {
-            return res_success_msg('Ok'); // 验证通过
+        if ($sign == self::makeSign($secret, $data)) {
+            return self::resSuccessMsg('Ok'); // 验证通过
         } else {
-            return res_fail_msg('Signature error!'); // 签名错误
+            return self::resFailMsg('Signature error!'); // 签名错误
         }
     }
 
